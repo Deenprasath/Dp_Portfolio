@@ -38,20 +38,22 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Replace these with your actual EmailJS credentials
-    const SERVICE_ID = "YOUR_SERVICE_ID";
-    const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-    const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    // Simulating email send for demonstration if keys are placeholders
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-      form.current.reset();
-      setTimeout(() => setSuccess(false), 5000);
-    }, 2000);
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      console.warn("EmailJS credentials are not set in environment variables. Falling back to simulation mode.");
+      // Simulating email send for demonstration if keys are placeholders
+      setTimeout(() => {
+        setLoading(false);
+        setSuccess(true);
+        form.current.reset();
+        setTimeout(() => setSuccess(false), 5000);
+      }, 1500);
+      return;
+    }
 
-    /* 
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {
           setLoading(false);
@@ -60,9 +62,9 @@ const Contact = () => {
           setTimeout(() => setSuccess(false), 5000);
       }, (error) => {
           setLoading(false);
-          alert("Failed to send message. Please try again.");
-      }); 
-    */
+          console.error("EmailJS Error:", error);
+          alert("Failed to send message. Please make sure your EmailJS credentials are correct.");
+      });
   };
 
   return (

@@ -36,6 +36,7 @@ const Hero = () => {
           <div className="flex flex-wrap justify-center gap-4 mb-20">
             <a 
               href="/resume.pdf" 
+              download="Deenprasath_Resume.pdf"
               target="_blank"
               className="px-8 py-4 bg-[#8B5CF6] rounded-xl font-bold text-white shadow-lg shadow-[#8B5CF6]/20 transition-all hover:scale-105 active:scale-95"
             >
